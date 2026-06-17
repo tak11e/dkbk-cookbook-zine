@@ -3,23 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="AMAKARA_Logo_MAIN_Transparent.png">
     <title>DekuBaku Cookbook | Interest Check</title>
     <style>
+        /* Import requested Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&family=Single+Day&display=swap');
+
         :root {
-            --cover-color: #3e1f0e; /* Rich leather brown */   
-            --page-color: #fcf8ee;  /* Warm cream paper */   
-            --page-edge: #e8dfc8;   /* Under-page paper stack edge */
-            --text-main: #2c2c2c;
-            --baku-orange: #d35400;
-            --deku-green: #27ae60;
-            --spine-shadow: rgba(0,0,0,0.18);
+            --cover-color: #3e1f0e;         /* Original rich leather brown untouched */   
+            --page-color: #FAECDE;          /* Off-white requested */   
+            --page-edge: #e2d3c4;           /* Under-page paper stack edge adjusted to match */
+            --text-main: #2D251C;           /* Dark brown/black copy text */
+            --baku-orange: #E57624;         /* Orange 1 */
+            --accent-orange: #D88B10;       /* Orange 2 */
+            --deku-green: #758C32;          /* Green */
+            --bg-blue: #223241;             /* Blue layout background */
+            --spine-shadow: rgba(45,37,28,0.22);
+            --border-color: #dfd7c2;
         }
 
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Literata', serif;
             margin: 0;
             padding: 40px 20px;
-            background: radial-gradient(circle at center, #2b3e50, #16202c);
+            background: radial-gradient(circle at center, var(--bg-blue), #111a22);
             color: var(--text-main);
             display: flex;
             justify-content: center;
@@ -30,186 +37,251 @@
         .desk-area {
             display: flex;
             align-items: flex-start;
-            perspective: 1500px;
+            perspective: 2500px; /* High perspective context for real 3D depth arcs */
             width: 100%;
-            max-width: 1000px;
+            max-width: 1150px;
             justify-content: center;
         }
 
-        /* --- THE BOOK COVER --- */
+        /* --- THE 3D OPEN BOOK COVER CONTAINER --- */
         .book {
             position: relative;
             width: 100%;
-            max-width: 850px;
-            height: 750px;
-            background: linear-gradient(to right, #2a1307 0%, var(--cover-color) 8%, var(--cover-color) 95%, #2a1307 100%);
-            border-radius: 6px 18px 18px 6px;
-            box-shadow: 25px 25px 50px rgba(0,0,0,0.5), inset 5px 0 15px rgba(255,255,255,0.05);
-            z-index: 2; 
+            max-width: 1050px;
+            height: 720px;
+            background: linear-gradient(to right, #2a1307 0%, var(--cover-color) 4%, var(--cover-color) 96%, #2a1307 100%);
+            border-radius: 12px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.55), inset 0 2px 4px rgba(255,255,255,0.08);
+            display: flex;
+            padding: 18px 22px;
+            box-sizing: border-box;
+            transform-style: preserve-3d;
         }
 
-        /* --- THE UNDERLYING PAGE STACK --- */
+        /* Physical center spine seam depth divider */
         .book::before {
             content: '';
             position: absolute;
-            top: 15px;
-            bottom: 15px;
-            left: 55px; 
-            right: 20px; 
-            background: var(--page-edge);
-            border-radius: 2px 8px 8px 2px;
-            box-shadow: 
-                inset -4px 0 10px rgba(0,0,0,0.05), 
-                -2px 0 3px rgba(0,0,0,0.08),
-                inset -1px 0 0 #d9d0b8,
-                inset -2px 0 0 #f0e9d5;
-            z-index: 1; 
-            border-right: 1px solid #d1c8b0;
-        }
-
-        /* --- STATIC BOTTOM PAGE LAYER --- */
-        /* CLEANED: Removed the harsh, muddy dark shadow. Uses a highly crisp, realistic inner-crease edge instead. */
-        .page-backing {
-            position: absolute;
-            top: 10px;
-            bottom: 10px;
-            left: 50px;
-            right: 65px;
-            background: var(--page-color);
-            background-image: linear-gradient(90deg, 
-                rgba(0, 0, 0, 0.03) 0%, 
-                transparent 5%, 
-                transparent 92%, 
-                rgba(0, 0, 0, 0.04) 96%, 
-                rgba(0, 0, 0, 0.15) 100%
-            );
-            border-radius: 2px 10px 10px 2px;
-            border: 1px solid #dfd7c2;
-            z-index: 2; 
+            top: 0; bottom: 0; left: 50%;
+            width: 16px;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.05) 70%, rgba(0,0,0,0.35) 100%);
+            z-index: 100; /* Stays above everything */
             pointer-events: none;
-            box-shadow: inset 35px 0 45px var(--spine-shadow);
         }
 
-        .page-backing::after {
+        /* --- LEFT SIDE FLAT BACKGROUND --- */
+        .base-left {
+            position: absolute;
+            top: 18px; bottom: 18px; left: 22px;
+            width: calc(50% - 22px);
+            background: var(--page-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px 2px 2px 12px;
+            background-image: linear-gradient(90deg, rgba(0,0,0,0.03) 0%, transparent 10%, transparent 85%, var(--spine-shadow) 100%);
+            box-sizing: border-box;
+            z-index: 1;
+        }
+        
+        .base-left::after {
             content: '';
             position: absolute;
             top: 20px; bottom: 20px; left: 20px; right: 20px;
             border: 1px double #c8c0ad;
             opacity: 0.3;
-            border-radius: 2px 6px 6px 2px;
-        } 
+            border-radius: 8px 2px 2px 8px;
+        }
 
-        /* --- RIGHT-ALIGNED TABS --- */
-        .bookmarks {
+        /* --- RIGHT SIDE UN-INTERRUPTED BASE PAGE LAYER --- */
+        .base-right-under-page {
             position: absolute;
-            top: 70px;
-            right: 18px; 
+            top: 18px; bottom: 18px; right: 22px;
+            width: calc(50% - 22px);
+            height: calc(100% - 36px);
+            background: var(--page-color);
+            border-radius: 2px 12px 12px 2px;
+            border: 1px solid var(--border-color);
+            background-image: linear-gradient(270deg, rgba(0,0,0,0.02) 0%, transparent 10%, transparent 85%, var(--spine-shadow) 100%);
+            box-sizing: border-box;
+            overflow-y: scroll; /* Forces permanent browser layout width calculations */
+            scrollbar-width: thin;
+            scrollbar-color: #d1c9b8 transparent;
+            z-index: 3; /* Lower than active flipping rig, higher than tucked bookmarks */
+        }
+
+        /* Inner container that matches scrolling bounds to maintain pristine spacing */
+        .page-scroll-content {
+            position: relative;
+            width: 100%;
+            min-height: 100%;
+            padding: 50px 45px;
+            box-sizing: border-box;
+        }
+
+        /* Custom double decorative border that adapts seamlessly to height */
+        .page-scroll-content::after {
+            content: '';
+            position: absolute;
+            top: 20px; bottom: 20px; left: 20px; right: 20px;
+            border: 1px double #c8c0ad;
+            border-radius: 2px 8px 8px 2px;
+            pointer-events: none;
+        }
+
+        /* --- TUCKED COOKBOOK BOOKMARK TABS --- */
+        .bookmarks-wrapper {
+            position: absolute;
+            top: 55px;
+            right: -25px; /* Placed exactly at the boundary of the pages */
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            z-index: 3; 
+            gap: 14px;
+            z-index: 2; /* Securely tucked beneath right-page and flipping leaf frames */
         }
 
         .bookmark {
             position: relative;
             writing-mode: vertical-rl;
             text-orientation: mixed;
-            padding: 32px 25px; 
+            padding: 28px 25px 28px 16px;
             text-decoration: none;
-            color: white;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #FAECDE !important; /* Forces copy font color contrast visibility */
+            font-family: 'Single Day', 'Zarame Gothic', sans-serif;
             font-weight: 700;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             text-transform: uppercase;
             letter-spacing: 2.5px;
-            border-radius: 0 14px 14px 0; 
-            box-shadow: 4px 2px 8px rgba(0,0,0,0.22), inset 1px 0 5px rgba(255,255,255,0.2);
-            border: 1px solid rgba(0,0,0,0.25);
-            border-left: none;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s;
-            transform: translateX(5px); 
+            border-radius: 0 10px 10px 0; 
+            border: 1px solid rgba(0,0,0,0.28);
+            border-left: 3px solid rgba(0,0,0,0.35); 
+            box-shadow: 3px 2px 5px rgba(0,0,0,0.22), inset -1px 0 3px rgba(255,255,255,0.18);
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.1), filter 0.2s;
             cursor: pointer;
+            transform: translateX(0); /* Default state rest */
+            background: none;
+            outline: none;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
         }
 
-        /* Stitching detail on the tabs */
         .bookmark::after {
             content: '';
             position: absolute;
-            top: 5px; bottom: 5px; right: 5px; left: -2px;
-            border: 1px dashed rgba(255,255,255,0.45);
+            top: 4px; bottom: 4px; right: 4px; left: 4px;
+            border: 1px dashed rgba(255,255,255,0.35);
             border-left: none;
-            border-radius: 0 10px 10px 0;
+            border-radius: 0 6px 6px 0;
             pointer-events: none;
-            z-index: 1;
         }
 
         .bookmark:hover {
-            transform: translateX(15px); 
-            filter: brightness(1.1);
+            transform: translateX(6px);
+            filter: brightness(1.08);
         }
 
+        /* ACTIVE SELECTION - Pushes out slightly more but remains below page layers */
         .bookmark.active {
-            transform: translateX(25px); 
+            transform: translateX(12px);
             filter: brightness(1.15);
-            box-shadow: 6px 3px 10px rgba(0,0,0,0.3), inset 1px 0 5px rgba(255,255,255,0.25);
+            box-shadow: 5px 3px 8px rgba(0,0,0,0.3), inset -1px 0 3px rgba(255,255,255,0.25);
         }
 
-        /* Rich gradients */
-        .bm-orange { background: linear-gradient(135deg, var(--baku-orange), #a84300); }
-        .bm-green { background: linear-gradient(135deg, var(--deku-green), #196f3d); }
-        .bm-charcoal { background: linear-gradient(135deg, #4b6584, #2c3e50); }
-        .bm-gold { background: linear-gradient(135deg, #f39c12, #b9770e); }
+        /* Expanded Culinary Gradient Palette for Tabs */
+        .bm-home { background: linear-gradient(135deg, #E57624, #b44f0b); }     /* Spicy Baku Orange */
+        .bm-mods { background: linear-gradient(135deg, #758C32, #4d5f1d); }     /* Matcha/Deku Green */
+        .bm-dates { background: linear-gradient(135deg, #A84242, #732323); }    /* Crimson Pepper Red */
+        .bm-faq { background: linear-gradient(135deg, #D88B10, #965f04); }      /* Honey Ginger Gold */
 
-        /* --- THE ACTIVE TOP PAGE --- */
-        .page {
+        /* --- THE DYNAMIC FLIPPING RIG --- */
+        .flipping-page-container {
             position: absolute;
-            top: 10px;
-            bottom: 10px;
-            left: 50px; 
-            right: 65px; 
-            background: var(--page-color);
-            background-image: linear-gradient(90deg, rgba(0,0,0,0.03) 0%, transparent 5%, transparent 95%, rgba(0,0,0,0.02) 100%);
-            border-radius: 2px 10px 10px 2px;
-            padding: 55px 65px; 
-            box-shadow: 
-                8px 0 15px -8px rgba(0,0,0,0.25), 
-                inset 35px 0 45px var(--spine-shadow), 
-                -1px 0 3px rgba(0,0,0,0.05);
-            overflow-y: auto;
-            display: none;
+            top: 18px;
+            right: 22px;
+            width: calc(50% - 22px);
+            height: calc(100% - 36px);
             transform-origin: left center;
-            scrollbar-width: thin;
-            scrollbar-color: #d1c9b8 transparent;
-            z-index: 10; 
-            border: 1px solid #dfd7c2;
+            transform-style: preserve-3d;
+            z-index: 10; /* Sweeps cleanly above the static text and tucked tabs */
+            transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none; 
+            display: none;
         }
 
-        .page::after {
+        .flipping-page-container.turning {
+            display: block;
+        }
+
+        .flipping-page-container.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        /* --- FRONT AND BACK LEAF SURFACES --- */
+        .page-face {
+            position: absolute;
+            inset: 0;
+            background: var(--page-color);
+            box-sizing: border-box;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        /* DYNAMIC FRONT FACE */
+        .page-face-front {
+            border-radius: 2px 12px 12px 2px;
+            border: 1px solid var(--border-color);
+            box-shadow: -4px 0 10px rgba(0,0,0,0.02), 2px 2px 8px rgba(0,0,0,0.05);
+            background-image: linear-gradient(270deg, rgba(0,0,0,0.02) 0%, transparent 10%, transparent 85%, var(--spine-shadow) 100%);
+            padding: 50px 45px;
+            overflow-y: scroll; /* Forces identical structural layout text boundaries */
+            scrollbar-width: none; 
+        }
+
+        .page-face-front::-webkit-scrollbar {
+            display: none; /* Keeps tracking surface matching down to the pixel silently */
+        }
+
+        .page-face-front::after {
             content: '';
             position: absolute;
             top: 20px; bottom: 20px; left: 20px; right: 20px;
             border: 1px double #c8c0ad;
+            border-radius: 2px 8px 8px 2px;
             pointer-events: none;
-            border-radius: 2px 6px 6px 2px;
         }
 
-        .page.active { display: block; }
+        /* DYNAMIC BACK FACE */
+        .page-face-back {
+            border-radius: 12px 2px 2px 12px;
+            border: 1px solid var(--border-color);
+            transform: rotateY(180deg); 
+            background-image: linear-gradient(90deg, rgba(0,0,0,0.04) 0%, transparent 15%, transparent 90%, rgba(0,0,0,0.08) 100%);
+        }
 
-        /* --- TYPOGRAPHY & CONTENT --- */
+        .page-face-back::after {
+            content: '';
+            position: absolute;
+            top: 20px; bottom: 20px; left: 20px; right: 20px;
+            border: 1px double #c8c0ad;
+            opacity: 0.25;
+            border-radius: 8px 2px 2px 8px;
+        }
+
+        /* --- TYPOGRAPHY & INTERIOR COMPONENTS --- */
         h1, h2 {
-            font-family: 'Georgia', serif;
-            color: var(--cover-color);
+            font-family: 'Cherry Bomb One', cursive;
+            color: var(--text-main);
             text-align: center;
             border-bottom: 2px solid #e0d7c3;
             padding-bottom: 15px;
             margin-bottom: 25px;
             position: relative;
+            margin-top: 5px;
+            text-transform: none; 
         }
         
         h1::after, h2::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: -2px;
             left: 50%;
             transform: translateX(-50%);
             width: 60px;
@@ -217,284 +289,602 @@
             background-color: var(--baku-orange);
         }
 
-        h1 { font-size: 2.8rem; text-transform: uppercase; letter-spacing: 3px; margin-top: 15px; }
-        h2 { font-size: 2rem; }
-        p, li { line-height: 1.8; font-size: 1.2rem; color: #444; } 
+        h1 { font-size: 2.6rem; letter-spacing: 1px; }
+        h2 { font-size: 2rem; letter-spacing: 1px; }
+        p, li { line-height: 1.75; font-size: 1.15rem; color: var(--text-main); font-family: 'Literata', serif; } 
         ul { list-style-type: square; padding-left: 20px; }
-        ul li { margin-bottom: 15px; }
-        strong { color: var(--cover-color); }
+        ul li { margin-bottom: 12px; }
+        strong { color: var(--baku-orange); }
 
-        .btn {
-            display: block;
-            width: fit-content;
-            margin: 45px auto;
-            padding: 18px 40px;
-            background: linear-gradient(135deg, var(--baku-orange), #b84a00);
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-weight: bold;
-            font-size: 1.15rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            transition: all 0.2s ease;
-            text-align: center;
-            position: relative;
-            z-index: 20; 
-            box-shadow: 0 4px 15px rgba(211, 84, 0, 0.3);
-            border: 1px solid #a04000;
-        }
-
-        .btn:hover { 
-            background: linear-gradient(135deg, var(--deku-green), #1e8449); 
-            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.3);
-            border-color: #196f3d;
-            transform: translateY(-2px);
-        }
-
-        .mod-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        /* --- SOCIAL LINKS --- */
+        .socials-cluster {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             gap: 20px;
-            margin-top: 35px;
+            margin-top: 45px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(200, 192, 173, 0.5);
         }
 
-        .mod-item {
-            text-align: center;
+        .social-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 58px;
+            height: 58px;
+            background: rgba(45, 37, 28, 0.05);
+            border: 2px dashed rgba(45, 37, 28, 0.25);
+            border-radius: 50%;
+            color: var(--text-main);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.06);
+            text-decoration: none;
+        }
+
+        .social-link svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+            filter: drop-shadow(0 1px 0px rgba(255, 255, 255, 0.6));
+        }
+
+        .social-link:hover {
+            color: var(--baku-orange);
+            background: rgba(225, 118, 36, 0.06);
+            border-color: var(--baku-orange);
+            border-style: solid;
+            transform: scale(0.96);
+            box-shadow: inset 0 4px 8px rgba(225, 118, 36, 0.15);
+        }
+
+        /* --- STICKY NOTE LAYOUT STYLE --- */
+        .sticky-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-top: 25px;
+            padding: 5px;
+        }
+
+        .sticky-note {
+            background: #fffbf4; 
+            padding: 20px;
+            box-shadow: 2px 6px 12px rgba(0,0,0,0.06), inset 0 8px 10px rgba(0,0,0,0.01);
+            border-radius: 2px 2px 16px 2px;
+            position: relative;
+            border: 1px solid rgba(45,37,28,0.1);
+            border-top: 4px solid var(--baku-orange); 
+            transform: rotate(-0.5deg);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .sticky-note:nth-child(odd) {
+            transform: rotate(0.8deg);
+            border-top-color: var(--deku-green); 
+        }
+
+        .sticky-note:nth-child(even) {
+            transform: rotate(-0.6deg);
+            border-top-color: var(--accent-orange); 
+        }
+
+        .sticky-note:hover {
+            transform: scale(1.02) rotate(0deg);
+            box-shadow: 4px 12px 20px rgba(45,37,28,0.12);
+            z-index: 5;
+        }
+
+        .sticky-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px dashed rgba(45,37,28,0.15);
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+        }
+
+        .sticky-pfp {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #e2d3c4;
+            border: 2px solid rgba(45,37,28,0.1);
+            flex-shrink: 0;
+        }
+
+        .sticky-meta {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sticky-name-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .sticky-name {
+            font-family: 'Single Day', 'Zarame Gothic', sans-serif;
+            font-size: 1.4rem;
             font-weight: bold;
-            color: var(--cover-color);
-            padding: 18px;
-            background: rgba(0,0,0,0.02);
-            border: 1px solid #e0d7c3;
-            border-radius: 6px;
-            font-size: 1.15rem;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+            color: var(--text-main);
+            margin: 0;
         }
 
-        /* --- PAGE FLIP ANIMATIONS --- */
-        @keyframes flipOut {
-            0% { transform: rotateY(0deg); opacity: 1; box-shadow: 8px 0 15px -8px rgba(0,0,0,0.25); }
-            100% { transform: rotateY(-90deg); opacity: 0; box-shadow: 0px 0 0px rgba(0,0,0,0); }
+        .sticky-pronouns {
+            font-family: 'Literata', serif;
+            font-size: 0.85rem;
+            color: #6a5e53;
+            font-style: italic;
         }
 
-        @keyframes flipIn {
-            0% { transform: rotateY(90deg); opacity: 0; box-shadow: 0px 0 0px rgba(0,0,0,0); }
-            100% { transform: rotateY(0deg); opacity: 1; box-shadow: 8px 0 15px -8px rgba(0,0,0,0.25); }
+        .sticky-role {
+            font-family: 'Single Day', 'Zarame Gothic', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            margin: 2px 0 0 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-       /* --- MOBILE SCREEN RESPONSIVENESS --- */
+        .sticky-body {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sticky-section {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text-main);
+        }
+
+        .sticky-label {
+            font-family: 'Single Day', 'Zarame Gothic', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            color: var(--deku-green);
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .sticky-text {
+            margin: 0;
+            font-style: italic;
+            font-family: 'Literata', serif;
+        }
+
+        .sticky-text li:hover {
+            font-weight: bold;
+        }
+
+        /* --- MOBILE SCREEN ADAPTABILITY --- */
         @media (max-width: 850px) {
-            .desk-area { flex-direction: column; align-items: center; padding: 10px; }
+            .desk-area { padding: 10px; }
             
             .book { 
                 height: auto; 
-                min-height: 700px; 
-                padding: 5px; 
-                border-radius: 10px; 
-                margin-top: 55px; 
-                background: linear-gradient(to bottom, #2a1307 0%, var(--cover-color) 8%, var(--cover-color) 95%, #2a1307 100%);
+                min-height: 650px; 
+                flex-direction: column;
+                padding: 12px; 
+                border-radius: 12px; 
+                margin-top: 50px;
+                background: linear-gradient(to bottom, #2a1307 0%, var(--cover-color) 6%, var(--cover-color) 94%, #2a1307 100%);
             }
-            
-            /* SOLID STATIC BACKING LAYER (Hides any transparency gaps during flips) */
-            .page-backing {
-                display: block; 
-                position: absolute;
-                top: 10px;
-                bottom: 15px;
-                left: 15px;
-                right: 15px;
-                z-index: 1; /* Sits completely behind the top tabs and main pages */
-                background: var(--page-color);
-                box-shadow: inset 0 35px 45px var(--spine-shadow);
-                background-image: linear-gradient(180deg, 
-                    rgba(0, 0, 0, 0.03) 0%, 
-                    transparent 5%, 
-                    transparent 92%, 
-                    rgba(0, 0, 0, 0.04) 96%, 
-                    rgba(0, 0, 0, 0.12) 100%
-                );
-                border-radius: 2px 10px 10px 2px;
-                border: 1px solid #dfd7c2;
+            .book::before, .base-left, .flipping-page-container { display: none !important; }
+
+            .base-right-under-page { 
+                position: relative; top: 0; right: 0; width: 100%; height: auto; min-height: 580px;
+                border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 5;
+                overflow-y: auto; /* Uses smooth dynamic scroll on mobile views safely */
             }
-            .page-backing::after {
-                top: 15px; bottom: 15px; left: 15px; right: 15px; 
-                border: 1px double #c8c0ad;
-                opacity: 0.3;
-                border-radius: 2px 6px 6px 2px;
+
+            .page-scroll-content {
+                padding: 35px 22px;
             }
-            
-            /* TOP NAVIGATION TABS FRAME */
-            .bookmarks { 
-                display: flex;          /* Added to manage strict row alignment */
-                flex-direction: row; 
-                flex-wrap: nowrap;      /* Prevents tabs from wrapping below each other */
-                box-sizing: border-box;
-                top: -45px;
-                right: 25px;            /* Bound to the right side of the book to lock containment */
-                left: 25px;             /* Keeps the left positioning anchor intact */
-                gap: 8px; 
-                z-index: 2;             /* Layered safely above the backing sheet */
+
+            .page-scroll-content::after {
+                display: none !important;
+            }
+
+            .bookmarks-wrapper { 
+                top: -33px; left: 15px; right: 15px; gap: 6px; flex-direction: row; width: auto; 
             }
             .bookmark { 
-                writing-mode: horizontal-tb; 
-                flex: 1;                /* Divides space evenly and prevents clipping out of the book */
-                min-width: 0;           /* Allows text to safely flex smaller during heavy zoom */
-                text-align: center;
-                padding: 18px 10px;     /* Kept vertical padding exactly identical, but made horizontal responsive */
-                font-size: 1rem;
-                border-radius: 10px 10px 0 0; 
-                transform: translateY(15px); 
-                border: 1px solid rgba(0,0,0,0.3); 
-                border-bottom: none; 
-                white-space: nowrap;    /* Keeps words on one clean line */
+                writing-mode: horizontal-tb; text-orientation: mixed; flex: 1; text-align: center;
+                padding: 16px 4px; font-size: 0.95rem; letter-spacing: 1px; border-radius: 6px 6px 0 0;
+                transform: translateY(12px) !important; border: 1px solid rgba(0,0,0,0.2); border-bottom: none;
+                white-space: nowrap; width: auto;
             }
-            .bookmark::after { 
-                top: 5px; bottom: -2px; right: 5px; left: 5px; 
-                border: 1px dashed rgba(255,255,255,0.5); 
-                border-bottom: none; 
-                border-radius: 8px 8px 0 0; 
-            }
-            .bookmark:hover { transform: translateY(8px); }
-            .bookmark.active { 
-                transform: translateY(0px); 
-                box-shadow: 0 -4px 15px rgba(0,0,0,0.3); 
-            }
+            .bookmark::after { top: 4px; bottom: -1px; right: 4px; left: 4px; border-radius: 4px 4px 0 0; border-bottom: none; }
+            .bookmark:hover { transform: translateY(6px) !important; }
+            .bookmark.active { transform: translateY(0px) !important; box-shadow: 0 -3px 10px rgba(0,0,0,0.25); z-index: 10 !important; }
             
-            /* ACTIVE MAIN PAGE CONTENT CANVAS */
-            .page { 
-                top: 10px;
-                bottom: 15px;
-                left: 15px; 
-                right: 15px; 
-                padding: 35px 25px; 
-                box-shadow: 0 10px 20px rgba(0,0,0,0.25); 
-                z-index: 10; 
-            }
-            
-            .book::before { display: none; }
-            h1 { font-size: 2.2rem; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            .socials-cluster { gap: 12px; margin-top: 30px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="desk-area">
+<div class="desk-area">
+    <div class="book" id="cookbook">
         
-        <div class="book">
-            
-            <div class="page-backing"></div>
+        <div class="base-left"></div>
 
-            <div class="bookmarks">
-                <a href="#" class="bookmark bm-orange active" onclick="showPage(event, 'home')">Home</a>
-                <a href="#" class="bookmark bm-green" onclick="showPage(event, 'mods')">Mods</a>
-                <a href="#" class="bookmark bm-charcoal" onclick="showPage(event, 'schedule')">Dates</a>
-                <a href="#" class="bookmark bm-gold" onclick="showPage(event, 'faq')">FAQ</a>
-            </div>
-
-            <div id="home" class="page active">
+        <div id="under-page-content" class="base-right-under-page">
+            <div class="page-scroll-content" id="active-scroll-wrapper">
                 <h1>Amakara</h1>
-                <p style="text-align: center; font-style: italic; color: #7a7161;">DekuBaku Cookbook Zine</p>
+                <p style="text-align: center; font-style: italic; color: #7a7161; margin-top: -15px;">DekuBaku Cookbook Zine</p>
                 <p>Amakara is a hybrid cookbook-zine project focused on <strong>Top!Izuku Midoriya</strong> and <strong>Bottom!Katsuki Bakugou</strong> dynamics within the <strong>Izuku Midoriya/Katsuki Bakugou</strong> pairing.</p>
-                <p></p>
-                <!-- <a href="YOUR_TALLY_LINK_HERE" class="btn" target="_blank">Fill Out Interest Check</a> -->
+                
+                <div class="socials-cluster">
+                    <a href="https://x.com/dkbkcookbook" class="social-link" target="_blank" title="Twitter / X"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                        <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.7 6.7 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15"/>
+                    </svg></a>
+                    <a href="https://bsky.app/profile/dkbkcookbook.bsky.social" class="social-link" target="_blank" title="BlueSky"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bluesky" viewBox="0 0 16 16">
+                        <path d="M3.468 1.948C5.303 3.325 7.276 6.118 8 7.616c.725-1.498 2.698-4.29 4.532-5.668C13.855.955 16 .186 16 2.632c0 .489-.28 4.105-.444 4.692-.572 2.04-2.653 2.561-4.504 2.246 3.236.551 4.06 2.375 2.281 4.2-3.376 3.464-4.852-.87-5.23-1.98-.07-.204-.103-.3-.103-.218 0-.081-.033.014-.102.218-.379 1.11-1.855 5.444-5.231 1.98-1.778-1.825-.955-3.65 2.28-4.2-1.85.315-3.932-.205-4.503-2.246C.28 6.737 0 3.12 0 2.632 0 .186 2.145.955 3.468 1.948"/>
+                    </svg></a>
+                    <a href="https://www.tumblr.com/dkbkcookbook" class="social-link" target="_blank" title="Tumblr"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                        <path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/>
+                    </svg></a>
+                    <a href="https://dkbkcookbook.straw.page" class="social-link" target="_blank" title="StrawPage"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-lg" viewBox="0 0 16 16">
+                        <path d="m9.708 6.075-3.024.379-.108.502.595.108c.387.093.464.232.38.619l-.975 4.577c-.255 1.183.14 1.74 1.067 1.74.72 0 1.554-.332 1.933-.789l.116-.549c-.263.232-.65.325-.905.325-.363 0-.494-.255-.402-.704zm.091-2.755a1.32 1.32 0 1 1-2.64 0 1.32 1.32 0 0 1 2.64 0"/>
+                    </svg></a>
+                </div>
             </div>
+        </div>
 
-            <div id="mods" class="page">
-                <h2>The Team</h2>
-                <p>Our team is managed by a team experienced in running exchanges and zines. Meet the moderators:</p>
-                <div class="mod-list">
-                    <div class="mod-item">
-                        <p><strong>Jay</strong></p>
-                        <p>Head & Finance Mod</p>
+        <div class="bookmarks-wrapper" role="tablist" aria-label="Cookbook Navigation">
+            <button class="bookmark bm-home active" id="tab-home" role="tab" aria-selected="true" onclick="turnToPage(event, 'home')">Home</button>
+            <button class="bookmark bm-mods" id="tab-mods" role="tab" aria-selected="false" onclick="turnToPage(event, 'mods')">Mods</button>
+            <button class="bookmark bm-dates" id="tab-schedule" role="tab" aria-selected="false" onclick="turnToPage(event, 'schedule')">Dates</button>
+            <button class="bookmark bm-faq" id="tab-faq" role="tab" aria-selected="false" onclick="turnToPage(event, 'faq')">FAQ</button>
+        </div>
+
+        <div id="flipping-leaf" class="flipping-page-container">
+            <div class="page-face page-face-back"></div>
+            <div id="flipping-front-content" class="page-face page-face-front"></div>
+        </div>
+
+    </div>
+</div>
+
+<div id="templates" style="display: none;">
+    <div id="tpl-home">
+        <h1>Amakara</h1>
+        <p style="text-align: center; font-style: italic; color: #7a7161; margin-top: -15px;">DekuBaku Cookbook Zine</p>
+        <p>Amakara is a hybrid cookbook-zine project focused on <strong>Top!Izuku Midoriya</strong> and <strong>Bottom!Katsuki Bakugou</strong> dynamics within the <strong>Izuku Midoriya/Katsuki Bakugou</strong> pairing.</p>
+        <div class="socials-cluster">
+            <a href="https://x.com" class="social-link" target="_blank" title="Twitter / X"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                    <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.7 6.7 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15"/>
+                </svg></a>
+                <a href="https://bsky.app" class="social-link" target="_blank" title="BlueSky"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bluesky" viewBox="0 0 16 16">
+                    <path d="M3.468 1.948C5.303 3.325 7.276 6.118 8 7.616c.725-1.498 2.698-4.29 4.532-5.668C13.855.955 16 .186 16 2.632c0 .489-.28 4.105-.444 4.692-.572 2.04-2.653 2.561-4.504 2.246 3.236.551 4.06 2.375 2.281 4.2-3.376 3.464-4.852-.87-5.23-1.98-.07-.204-.103-.3-.103-.218 0-.081-.033.014-.102.218-.379 1.11-1.855 5.444-5.231 1.98-1.778-1.825-.955-3.65 2.28-4.2-1.85.315-3.932-.205-4.503-2.246C.28 6.737 0 3.12 0 2.632 0 .186 2.145.955 3.468 1.948"/>
+                </svg></a>
+                <a href="https://tumblr.com" class="social-link" target="_blank" title="Tumblr"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                    <path d="M14.563 24c-5.093 0-7.031-3.756-7.031-6.411V9.747H5.116V6.648c3.63-1.313 4.512-4.596 4.71-6.469C9.84.051 9.941 0 9.999 0h3.517v6.114h4.801v3.633h-4.82v7.47c.016 1.001.375 2.371 2.207 2.371h.09c.631-.02 1.486-.205 1.936-.419l1.156 3.425c-.436.636-2.4 1.374-4.156 1.404h-.178l.011.002z"/>
+                </svg></a>
+                <a href="https://strawpage.com" class="social-link" target="_blank" title="StrawPage"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-lg" viewBox="0 0 16 16">
+                    <path d="m9.708 6.075-3.024.379-.108.502.595.108c.387.093.464.232.38.619l-.975 4.577c-.255 1.183.14 1.74 1.067 1.74.72 0 1.554-.332 1.933-.789l.116-.549c-.263.232-.65.325-.905.325-.363 0-.494-.255-.402-.704zm.091-2.755a1.32 1.32 0 1 1-2.64 0 1.32 1.32 0 0 1 2.64 0"/>
+                </svg></a>
+        </div>
+    </div>
+
+    <div id="tpl-mods">
+        <h2>The Team</h2>
+        <div class="sticky-container">
+            <div class="sticky-note">
+                <div class="sticky-header">
+                    <img src="https://pbs.twimg.com/profile_images/1987717911734067200/8veJPY9K_400x400.jpg" alt="Jay's PFP" class="sticky-pfp">
+                    <div class="sticky-meta">
+                        <div class="sticky-name-row">
+                            <h3 class="sticky-name">Jay</h3>
+                            <span class="sticky-pronouns">(they/them)</span>
+                        </div>
+                        <p class="sticky-role">Head & Finance Mod</p>
                     </div>
-                    <div class="mod-item">
-                        <p><strong>Bee</strong></p>
-                        <p>Writing Mod</p>
+                </div>
+                <div class="sticky-body">
+                    <div class="sticky-section">
+                        <span class="sticky-label">About Me</span>
+                        <p class="sticky-text">Hi, I'm Jay! I have a deep love for DkBk and can't wait to contribute to spread the DkBk love :)</p>
                     </div>
-                    <div class="mod-item">
-                        <p><strong>Celestibex</strong></p>
-                        <p>Shipping Mod</p>
-                    </div>
-                    <div class="mod-item">
-                        <p><strong>Dent</strong></p>
-                        <p>Art Mod</p>
-                    </div>
-                    <div class="mod-item">
-                        <p><strong>Pluto</strong></p>
-                        <p>Chef Mod</p>
-                    </div>
-                    <div class="mod-item">
-                        <p><strong>Presto</strong></p>
-                        <p>Chef Intern Mod</p>
-                    </div>
-                    <div class="mod-item">
-                        <p><strong>Itsakura</strong></p>
-                        <p>Social Media Mod</p>
-                    </div>
-                    <div class="mod-item">
-                        <p><strong>Taylor</strong></p>
-                        <p>Graphics Mod</p>
+                    <div class="sticky-section">
+                        <span class="sticky-label">Experience</span>
+                        <ul class="sticky-text">
+                            <li><a href="https://x.com" target="_blank" style="font-style: italic; color: #333; text-decoration: none;">Twin Stars: a Winter Solstice BkDkBk Zine - Head & Finance Mod</a></li>
+                            <li><a href="https://x.com" target="_blank" style="font-style: italic; color: #333; text-decoration: none;">DkBk Fanwork Exchange - Communications & Writing Submissions Mod</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <div id="schedule" class="page">
-                <h2>Project Timeline</h2>
-                <ul>
-                    <li><strong>July 2026:</strong> Launch</li>
-                    <li><strong>August 2026:</strong> Interest Check</li>
-                    <li><strong>October 2026:</strong> Contributor Application</li>
-                </ul>
-                <p><em>Note: Dates are subject to change.</em></p>
+            <div class="sticky-note">
+                <div class="sticky-header">
+                    <img src="https://placehold.co/150" alt="Bee's PFP" class="sticky-pfp">
+                    <div class="sticky-meta">
+                        <div class="sticky-name-row">
+                            <h3 class="sticky-name">Bee</h3>
+                            <span class="sticky-pronouns">(they/them)</span>
+                        </div>
+                        <p class="sticky-role">Writing Mod</p>
+                    </div>
+                </div>
+                <div class="sticky-body">
+                    <div class="sticky-section">
+                        <span class="sticky-label">About Me</span>
+                        <p class="sticky-text">Howdy! I'm Bee and I've been in and out of the fandom since 2021. Discovered the light of dkbk early on and it forever changed the trajectory of my life.</p>
+                    </div>
+                    <div class="sticky-section">
+                        <span class="sticky-label">Experience</span>
+                        <ul class="sticky-text">
+                            <li>Writing/Beta Mod for 4 dynamic anthology projects and fan zines.</li>
+                            <li>Saddle Up: a BKDKBK Zine Writing/Beta Mod</li>
+                            <li>School's in Session: a Sensei Izuku Zine Head Mod</li>
+                            <li>It's Okay to Not Be Okay Head/Socials Mod</li>
+                            <li>Writer for other zines and events</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            <div id="faq" class="page">
-                <h2>Frequently Asked Questions</h2>
-                <ul>
-                    <li><strong>Is this project for charity or profit?</strong><br>Details regarding compensation and charity donations will be finalized after evaluating the interest check results.</li>
-                    <li><strong>What kind of contributors are you looking for?</strong><br>We will be looking for page artists, spot artists, merch artists, writers, and chefs.</li>
-                    <li><strong>What do you mean by hybrid?</strong><br>Hybrid for us means a zine and a cookbook as one book. Writers and artists will collaborate with a chef to create a piece that goes along with the recipe crafted. More information is to come after our interest check.</li>
-                </ul>
+            <div class="sticky-note">
+                <div class="sticky-header">
+                    <img src="https://placehold.co/150" alt="Celestibex's PFP" class="sticky-pfp">
+                    <div class="sticky-meta">
+                        <div class="sticky-name-row">
+                            <h3 class="sticky-name">Celestibex</h3>
+                            <span class="sticky-pronouns">(any)</span>
+                        </div>
+                        <p class="sticky-role">Shipping Mod</p>
+                    </div>
+                </div>
+                <div class="sticky-body">
+                    <div class="sticky-section">
+                        <span class="sticky-label">About Me</span>
+                        <p class="sticky-text">Hi! I'm Becs and I have been a fan of my hero since 2014! I have always really loved Izuku and Katsuki's dynamic and their overall relationship is so important to me! I am very excited to join this project!</p>
+                    </div>
+                    <div class="sticky-section">
+                        <span class="sticky-label">Experience</span>
+                        <ul class="sticky-text">
+                            <li>Handled safe fulfillment, packaging, and sorting setups for 2 large-print books.</li>
+                            <li>Learning to Love: a Todoroki Shouto Zine (Head Mod, Shipping Mod, Art Mod)</li>
+                            <li>Origin Trio Planner:  Creator, finance, shipping, socmed, art</li>
+                            <li>Binary Stars: Art Mod</li>
+                            <li>Finance, Shipping, Art experieince for my own shop!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sticky-note">
+                <div class="sticky-header">
+                    <img src="https://placehold.co/150" alt="Dent's PFP" class="sticky-pfp">
+                    <div class="sticky-meta">
+                        <div class="sticky-name-row">
+                            <h3 class="sticky-name">Dent</h3>
+                            <span class="sticky-pronouns">(he/they)</span>
+                        </div>
+                        <p class="sticky-role">Art Mod</p>
+                    </div>
+                </div>
+                <div class="sticky-body">
+                    <div class="sticky-section">
+                        <span class="sticky-label">About Me</span>
+                        <p class="sticky-text">hi i'm dent. ive been a dkbk fan for two years, they're my favourite boys in the world! i love drawing them being goobers and love kacchan's canon cooking prowess so much</p>
+                    </div>
+                    <div class="sticky-section">
+                        <span class="sticky-label">Experience</span>
+                        <ul class="sticky-text">
+                            <li>ominous: a possessive deku dkbk zine : art mod</li>
+                            <li>daydreaming about us bkdkbk reverse bang : art & socials mod</li>
+                            <li>the cutest bang in the world tgck bang : art mod</li>
+                            <li>artist contributor for several zines</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sticky-note">
+                <div class="sticky-header">
+                    <img src="https://placehold.co/150" alt="Pluto's PFP" class="sticky-pfp">
+                    <div class="sticky-meta">
+                        <div class="sticky-name-row">
+                            <h3 class="sticky-name">Dawn</h3>
+                            <span class="sticky-pronouns">(they/them)</span>
+                        </div>
+                        <p class="sticky-role">Chef Mod</p>
+                    </div>
+                </div>
+                <div class="sticky-body">
+                    <div class="sticky-section">
+                        <span class="sticky-label">About Me</span>
+                        <p class="sticky-text">Hi, I'm Dawn, I love food of all kinds from all kinds of cultures and countries. I've also been reading MHA since my high school days so it's an honor to be a part of this project, I hope you will enjoy the finished cookbook just as much as we have enjoyed making it!</p>
+                    </div>
+                    <div class="sticky-section">
+                        <span class="sticky-label">Experience</span>
+                        <ul class="sticky-text">
+                            <li>ORV Cookbook: Chef mod</li>
+                            <li>PJO Guidebook: Chef/ Recipie writer</li>
+                            <li>Hawks BB + Dadzawa BB: Beta reader</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sticky-note">
+                <div class="sticky-header">
+                    <img src="https://placehold.co/150" alt="Presto's PFP" class="sticky-pfp">
+                    <div class="sticky-meta">
+                        <div class="sticky-name-row">
+                            <h3 class="sticky-name">Presto</h3>
+                            <span class="sticky-pronouns">(she/they)</span>
+                        </div>
+                        <p class="sticky-role">Chef Intern Mod</p>
+                    </div>
+                </div>
+                <div class="sticky-body">
+                    <div class="sticky-section">
+                        <span class="sticky-label">About Me</span>
+                        <p class="sticky-text">Loves to cook!! Fairly new to the fandom in general, but always happy to talk about its best boys!!</p>
+                    </div>
+                    <div class="sticky-section">
+                        <span class="sticky-label">Experience</span>
+                        <ul class="sticky-text">
+                            Interning here c: really looking forward to learning and creating with everyone!!
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sticky-note">
+                <div class="sticky-header">
+                    <img src="https://placehold.co/150" alt="Itsakura's PFP" class="sticky-pfp">
+                    <div class="sticky-meta">
+                        <div class="sticky-name-row">
+                            <h3 class="sticky-name">Sakura</h3>
+                            <span class="sticky-pronouns">(she/her)</span>
+                        </div>
+                        <p class="sticky-role">Social Media Mod</p>
+                    </div>
+                </div>
+                <div class="sticky-body">
+                    <div class="sticky-section">
+                        <span class="sticky-label">About Me</span>
+                        <p class="sticky-text">hi i'm rara ✿ i've loved kacchan and deku for so long, they're honestly my heroes! i admire kacchan's drive so much, and i'm so thrilled to get to mix two of my favorite things in the world: cooking and dkbk 🤝</p>
+                    </div>
+                    <div class="sticky-section">
+                        <span class="sticky-label">Experience</span>
+                        <ul class="sticky-text">
+                            <li>Social Media Runner for 2 large fandom events and exchanges.</li>
+                            <li>dawn- given zine : social media & graphics mod</li>
+                            <li>tranquility mxtx zine : head, org & social media mod</li>
+                            <li>angel's share zine : head, org & social media mod</li>
+                            <li>haikaveh mini-bang & kaveh week : org, social media & graphics mod</li>
+                            <li>org, writing & marketing mod for several other zines and events</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sticky-note">
+                <div class="sticky-header">
+                    <img src="https://placehold.co/150" alt="Taylor's PFP" class="sticky-pfp">
+                    <div class="sticky-meta">
+                        <div class="sticky-name-row">
+                            <h3 class="sticky-name">Tayl</h3>
+                            <span class="sticky-pronouns">(they/she)</span>
+                        </div>
+                        <p class="sticky-role">Graphics Mod</p>
+                    </div>
+                </div>
+                <div class="sticky-body">
+                    <div class="sticky-section">
+                        <span class="sticky-label">About Me</span>
+                        <p class="sticky-text">hi hi! I’m Tayl and Ive been an MHA fan since 2016! I love dkbk and I love the creativity and passion of this fandom, im super excited to support this project - lets get cooking!</p>
+                    </div>
+                    <div class="sticky-section">
+                        <span class="sticky-label">Experience</span>
+                        <ul class="sticky-text">
+                            <li>SPARKS: A Trans BKDKBK Zine - Art Mod</li>
+                            <li>The Arena: A BKDKBK Zine - Formatting Mod</li>
+                            <li>The DKBK Fanwork Exchange - Organizational and Graphics Mod</li>
+                            <li>Explodo-Smash and Wonder Duo Days - Co-Head Mod and Founder</li>
+                            <li>graphics modding and organizational support on several zines and projects</li>
+                            <li>art contributor on several zines and projects</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 
-    <script>
-        let isAnimating = false;
+    <div id="tpl-schedule">
+        <h2>Project Timeline</h2>
+        <p>Important schedules and milestones for our zine project production roadmap:</p>
+        <ul>
+            <li><strong>July 2026:</strong> Launch</li>
+            <li><strong>August 2026:</strong> Interest Check</li>
+            <li><strong>October 2026:</strong> Contributor Application</li>
+        </ul>
+        <p style="margin-top: 30px;"><em>Note: Dates are subject to change.</em></p>
+    </div>
 
-        function showPage(event, targetId) {
-            event.preventDefault();
-            
-            if (isAnimating) return;
+    <div id="tpl-faq">
+        <h2>Frequently Asked Questions</h2>
+        <ul>
+            <li><strong>Is this project for charity or profit?</strong><br>Details regarding compensation and charity donations will be finalized after evaluating the interest check results.</li>
+            <li><strong>What kind of contributors are you looking for?</strong><br>We will be looking for page artists, spot artists, merch artists, writers, and chefs.</li>
+            <li><strong>What do you mean by hybrid?</strong><br>Hybrid for us means a zine and a cookbook as one book. Writers and artists will collaborate with a chef to create a piece that goes along with the recipe crafted. More information is to come after our interest check.</li>
+        </ul>
+    </div>
+</div>
 
-            const currentPage = document.querySelector('.page.active');
-            const targetPage = document.getElementById(targetId);
+<script>
+    let isFlipping = false;
+    let activePageId = 'home';
 
-            if (currentPage === targetPage) return;
+    function turnToPage(event, pageId) {
+        event.preventDefault();
+        if (isFlipping || pageId === activePageId) return;
 
-            isAnimating = true;
+        isFlipping = true;
 
-            document.querySelectorAll('.bookmark').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+        const leaf = document.getElementById('flipping-leaf');
+        const flippingFrontContent = document.getElementById('flipping-front-content');
+        const staticUnderPage = document.getElementById('under-page-content');
+        const scrollWrapper = document.getElementById('active-scroll-wrapper');
+        
+        const currentHtmlContent = document.getElementById('tpl-' + activePageId).innerHTML;
+        const targetHtmlContent = document.getElementById('tpl-' + pageId).innerHTML;
 
-            currentPage.style.animation = 'flipOut 0.4s ease-in forwards';
+        // Reset and update tabs
+        document.querySelectorAll('.bookmark').forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+        });
+        const clickedTab = event.currentTarget;
+        clickedTab.classList.add('active');
+        clickedTab.setAttribute('aria-selected', 'true');
 
-            setTimeout(() => {
-                currentPage.classList.remove('active');
-                currentPage.style.animation = '';
-                
-                targetPage.classList.add('active');
-                targetPage.style.animation = 'flipIn 0.4s ease-out forwards';
+        activePageId = pageId;
 
-                setTimeout(() => {
-                    targetPage.style.animation = '';
-                    isAnimating = false;
-                }, 400);
-
-            }, 400);
+        // Mobile fallback system
+        if (window.innerWidth <= 850) {
+            scrollWrapper.innerHTML = targetHtmlContent;
+            isFlipping = false;
+            return;
         }
-    </script>
+
+        // 1. Load context inside flipping leaf tracking boundaries
+        flippingFrontContent.innerHTML = currentHtmlContent;
+
+        // 2. Adjust core baseline text instantly
+        scrollWrapper.innerHTML = targetHtmlContent;
+        staticUnderPage.scrollTop = 0;
+
+        // 3. Fire turn animations smoothly 
+        leaf.classList.add('turning');
+        leaf.offsetHeight; // Flush paint alignment context
+        leaf.classList.add('flipped');
+
+        // 4. Secure frame cleanup resets when animation resolves
+        setTimeout(() => {
+            leaf.style.transition = 'none';
+            leaf.classList.remove('flipped', 'turning');
+            leaf.offsetHeight; 
+            leaf.style.transition = 'transform 0.75s cubic-bezier(0.4, 0, 0.2, 1)';
+            isFlipping = false;
+        }, 750);
+    }
+</script>
 </body>
 </html>
