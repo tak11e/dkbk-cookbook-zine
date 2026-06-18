@@ -256,6 +256,16 @@
             background-image: linear-gradient(90deg, rgba(0,0,0,0.04) 0%, transparent 15%, transparent 90%, rgba(0,0,0,0.08) 100%);
         }
 
+        .page-face-back img {
+            width: 313.25px; 
+            height: 354.5px; 
+            object-fit: contain;
+
+            mix-blend-mode: color-burn;
+            opacity: 0.045;
+            filter: brightness(0.31);
+        }
+
         .page-face-back::after {
             content: '';
             position: absolute;
@@ -464,6 +474,16 @@
             font-weight: bold;
         }
 
+        .base-left img {
+            width: 313.25px; 
+            height: 354.5px; 
+            object-fit: contain;
+
+            mix-blend-mode: color-burn;
+            opacity: 0.045;
+            filter: brightness(0.31);
+        }
+
         /* --- MOBILE SCREEN ADAPTABILITY --- */
         @media (max-width: 850px) {
             .desk-area { padding: 10px; }
@@ -517,7 +537,11 @@
 <div class="desk-area">
     <div class="book" id="cookbook">
         
-        <div class="base-left"></div>
+        <div class="base-left">
+            <div style="display: grid; place-items: center; height: 650px;">
+                <img src="AMAKARA_Logo.png" alt="Amakara's Logo">
+            </div>
+        </div>
 
         <div id="under-page-content" class="base-right-under-page">
             <div class="page-scroll-content" id="active-scroll-wrapper">
@@ -550,7 +574,11 @@
         </div>
 
         <div id="flipping-leaf" class="flipping-page-container">
-            <div class="page-face page-face-back"></div>
+            <div class="page-face page-face-back">
+                <div style="display: grid; place-items: center; height: 650px;">
+                    <img src="AMAKARA_Logo.png" alt="Amakara's Logo">
+                </div>
+            </div>
             <div id="flipping-front-content" class="page-face page-face-front"></div>
         </div>
 
