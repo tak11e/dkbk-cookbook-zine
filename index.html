@@ -348,6 +348,37 @@
             box-shadow: inset 0 4px 8px rgba(225, 118, 36, 0.15);
         }
 
+        /* --- BACK TO TOP BUTTON --- */
+        .back-to-top {
+            position: absolute;
+            bottom: 32px;
+            right: 36px;
+            background: var(--baku-orange);
+            color: #FAECDE;
+            border: 1px solid rgba(0,0,0,0.15);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+            z-index: 99;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .back-to-top:hover {
+            transform: scale(1.08);
+            background: #b44f0b; /* Deepens on hover to match your culinary theme */
+        }
+
+        .back-to-top svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
         /* --- STICKY NOTE LAYOUT STYLE --- */
         .sticky-container {
             display: flex;
@@ -572,6 +603,13 @@
             h1 { font-size: 2rem; }
             h2 { font-size: 1.5rem; }
             .socials-cluster { gap: 12px; margin-top: 30px; }
+
+            .back-to-top {
+                bottom: 22px;
+                right: 42px; /* Leaves clean room for the side tabs */
+                width: 36px;
+                height: 36px;
+            }
         }
     </style>
 </head>
@@ -587,6 +625,15 @@
         </div>
 
         <div id="under-page-content" class="base-right-under-page">
+            <div class="page-scroll-content" id="active-scroll-wrapper">
+            </div>
+
+            <button class="back-to-top" onclick="scrollToTop()" aria-label="Back to top">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5-.5z"/>
+                </svg>
+            </button>
+        </div>
             <div class="page-scroll-content" id="active-scroll-wrapper">
                 <h1>Amakara</h1>
                 <p style="text-align: center; font-style: italic; color: #7a7161; margin-top: -15px;">DekuBaku Cookbook Zine</p>
@@ -974,6 +1021,13 @@
 <script>
     let isFlipping = false;
     let activePageId = 'home';
+
+    function scrollToTop() {
+        document.getElementById('under-page-content').scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
 
     function turnToPage(event, pageId) {
         event.preventDefault();
