@@ -1007,19 +1007,17 @@
             return;
         }
 
-        // 1. Load context inside flipping leaf tracking boundaries
+        //Load context inside flipping leaf tracking boundaries
         flippingFrontContent.innerHTML = currentHtmlContent;
 
-        // 2. Adjust core baseline text instantly
+        //Adjust baseline text instantly
         scrollWrapper.innerHTML = targetHtmlContent;
         staticUnderPage.scrollTop = 0;
 
-        // 3. Fire turn animations smoothly 
         leaf.classList.add('turning');
-        leaf.offsetHeight; // Flush paint alignment context
+        leaf.offsetHeight; 
         leaf.classList.add('flipped');
 
-        // 4. Secure frame cleanup resets when animation resolves
         setTimeout(() => {
             leaf.style.transition = 'none';
             leaf.classList.remove('flipped', 'turning');
